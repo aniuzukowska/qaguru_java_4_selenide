@@ -1,5 +1,6 @@
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -8,7 +9,11 @@ import static com.codeborne.selenide.Selenide.open;
 import static com.codeborne.selenide.Selectors.byLinkText;
 
 public class CheckSoftAssertionsTest {
-
+    @BeforeAll
+    static void beforeAll() {
+        Configuration.browserSize = "1920x1080";
+        Configuration.baseUrl = "https://github.com";
+    }
     @Test
     void isThereExampleJUnit5InSoftAssertions(){
         String jUnitCodeExample= "@ExtendWith({SoftAssertsExtension.class})\n" +
@@ -23,8 +28,7 @@ public class CheckSoftAssertionsTest {
                 "  }\n" +
                 "}";
 
-        Configuration.browserSize="1920x1080";
-        open("https://github.com/selenide/selenide");
+        open("/selenide/selenide");
         $("#wiki-tab").click();
         $(".js-wiki-more-pages-link").click();
         $(byLinkText("SoftAssertions")).shouldBe(visible);
